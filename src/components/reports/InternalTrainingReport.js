@@ -38,11 +38,16 @@ const InternalTrainingReport = () => {
 
   const fetchReport = (e) => {
     e.preventDefault();
-    console.log("from: " + from);
-    console.log("to: " + to);
+    //  console.log("from: " + from);
+    //  console.log("to: " + to);
+
+    const formData = {
+      from: from,
+      to: to,
+    };
 
     axios
-      .get(`http://127.0.0.1:8000/api/internal/report/${from}/${to}`)
+      .get(`http://127.0.0.1:8000/api/internal/report/`, formData)
       .then((response) => {
         console.log(response.data);
         setInternalTrainingReport(response.data);
