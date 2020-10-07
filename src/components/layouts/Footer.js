@@ -1,21 +1,26 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "fixed",
+  },
+}));
 
 const Footer = () => {
+  const classes = useStyles();
+
   return (
     <div>
-      <footer className="main-footer">
-        <strong>
-          Copyright © 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.
-        </strong>
-        All rights reserved.
-        <div className="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.0.5
+      <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+        {/* Left navbar links */}
+        <div class="float-right d-none d-sm-inline-block">
+          <strong>
+            <i>Powered By IT Unit</i>
+          </strong>
         </div>
-      </footer>
-      {/* Control Sidebar */}
-      <aside className="control-sidebar control-sidebar-dark">
-        {/* Control sidebar content goes here */}
-      </aside>
+        {/* Right navbar links */}
+      </nav>
     </div>
   );
 };

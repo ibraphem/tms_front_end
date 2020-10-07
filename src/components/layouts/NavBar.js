@@ -111,13 +111,19 @@ const NavBar = () => {
                   <li className="nav-item">
                     <Link to="/internal/report" className="nav-link">
                       <i className="far fa-circle nav-icon" />
-                      <p>Internal Training Report</p>
+                      <p>Internal Training</p>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/external/report" className="nav-link">
+                    <Link to="/internal/training/cost" className="nav-link">
                       <i className="far fa-circle nav-icon" />
-                      <p>External Training Report</p>
+                      <p>Internal Training Cost</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/external/training/cost" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>External Training Cost</p>
                     </Link>
                   </li>
                 </ul>

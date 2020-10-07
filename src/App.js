@@ -16,6 +16,8 @@ import ScheduleTraining from "./components/trainings/ScheduleTraining";
 import TrainingRecords from "./components/trainings/TrainingRecords";
 import Instructor from "./components/instructors/Instructor";
 import InternalTrainingReport from "./components/reports/InternalTrainingReport";
+import InternalTrainingCostReport from "./components/reports/InternalTrainingCostReport";
+import ExternalTrainingCostReport from "./components/reports/ExternalTrainingCostReport";
 
 const App = (props) => {
   const [email, setEmail] = useState("");
@@ -131,6 +133,22 @@ const App = (props) => {
           exact
           path="/internal/report"
           component={InternalTrainingReport}
+          email={email}
+          password={password}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/internal/training/cost"
+          component={InternalTrainingCostReport}
+          email={email}
+          password={password}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/external/training/cost"
+          component={ExternalTrainingCostReport}
           email={email}
           password={password}
         />
