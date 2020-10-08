@@ -102,25 +102,78 @@ const TrainingSchedule = () => {
   const columns = [
     {
       title: "TRAINING TITLE",
-      field: "course",
-      editable: "never",
+      field: "training_title",
       cellStyle: {
-        width: 200,
-        minWidth: 220,
+        minWidth: 200,
+
+        margin: 0,
+        borderSpacing: 0,
       },
     },
     {
-      title: "INSTRUCTOR",
-      field: "full_name",
-      editable: "never",
+      title: "TYPE",
+      field: "training_type",
+      cellStyle: {
+        width: "10%",
+
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
+      },
+      headerStyle: {
+        minWidth: 10,
+        padding: 0,
+        margin: 0,
+      },
+      lookup: { Internal: "Internal", External: "External" },
     },
+
+    {
+      title: "VALIDITY",
+      field: "validity",
+
+      cellStyle: {
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
+      },
+      render: (row) => (
+        <span>
+          {" "}
+          {row["validity"] !== null
+            ? row["validity"] + " Months"
+            : "No Expiration"}
+        </span>
+      ),
+    },
+
+    {
+      title: "COST",
+      field: "cost",
+
+      cellStyle: {
+        minWidth: 10,
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
+      },
+      render: (row) => <span>&#8358;{row["cost"]}</span>,
+    },
+
     {
       title: "START DATE",
       field: "training_start_date",
       type: "date",
       cellStyle: {
-        width: 115,
-        minWidth: 115,
+        minWidth: 113,
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
+      },
+      headerStyle: {
+        minWidth: 10,
+        padding: 0,
+        margin: 0,
       },
       render: (row) => <span> {formatDate(row["training_start_date"])}</span>,
     },
@@ -129,30 +182,28 @@ const TrainingSchedule = () => {
       field: "training_end_date",
       type: "date",
       cellStyle: {
-        width: 115,
-        minWidth: 115,
+        minWidth: 113,
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
+      },
+      headerStyle: {
+        minWidth: 10,
+        padding: 0,
+        margin: 0,
       },
       render: (row) => <span> {formatDate(row["training_end_date"])}</span>,
     },
-    {
-      title: "TYPE",
-      field: "training_type",
 
-      lookup: { Internal: "Internal", External: "External" },
-    },
     {
-      title: "COST",
-      field: "cost",
-      type: "numeric",
-
-      render: (row) => <span>&#8358;{row["cost"]}</span>,
-    },
-    {
-      title: "TRAINING VENUE",
+      title: "VENUE",
       field: "venue",
       cellStyle: {
-        width: 200,
         minWidth: 200,
+
+        padding: 0,
+        margin: 0,
+        borderSpacing: 0,
       },
     },
   ];
@@ -168,14 +219,30 @@ const TrainingSchedule = () => {
     const formData = {
       training_date: training_start_date,
       end_date: training_end_date,
-      //   instructor_id: newData.instructor_id,
+      training_title: newData.training_title,
       training_type: newData.training_type,
       venue: newData.venue,
+      validity: newData.validity,
       cost: newData.cost,
     };
 
     let errorList = [];
     if (formData.training_start_date === "") {
+      errorList.push("Training start date can't be empty   ");
+      setIserror(true);
+    }
+    if (isNaN(formData.cost)) {
+      errorList.push("Cost must be number   ");
+      setIserror(true);
+    }
+
+    if (isNaN(formData.validity)) {
+      errorList.push(
+        "validity must be number in months (i.e 24). Please leave blank if training has no expiry   "
+      );
+      setIserror(true);
+    }
+    if (formData.training_title === "") {
       errorList.push("Training start date can't be empty   ");
       setIserror(true);
     }
@@ -282,9 +349,12 @@ const TrainingSchedule = () => {
                     search: true,
                     sorting: true,
                     exportButton: true,
+
                     headerStyle: {
                       backgroundColor: "#01579b",
                       color: "#FFF",
+                      margin: 0,
+                      textAlign: "left",
                     },
                   }}
                   style={{

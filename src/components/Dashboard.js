@@ -1,9 +1,26 @@
-import React from "react";
-import Header from "./layouts/Header";
-import NavBar from "./layouts/NavBar";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Dashboard = () => {
+  const [count, setCount] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://127.0.0.1:8000/api/count")
+      .then((response) => {
+        console.log(response.data);
+        setCount(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <div className="content-wrapper">
@@ -35,11 +52,11 @@ const Dashboard = () => {
           <div className="container-fluid">
             {/* Small boxes (Stat box) */}
             <div className="row">
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 {/* small box */}
                 <div className="small-box bg-info">
                   <div className="inner">
-                    <h3>150</h3>
+                    <h3>{count.active_trainee_count}</h3>
                     <p>Active Trainees</p>
                   </div>
                   <div className="icon">
@@ -51,11 +68,11 @@ const Dashboard = () => {
                 </div>
               </div>
               {/* ./col */}
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 {/* small box */}
-                <div className="small-box bg-primary">
+                <div className="small-box bg-danger">
                   <div className="inner">
-                    <h3>53</h3>
+                    <h3>{count.exited_trainee_count}</h3>
                     <p>Exited Trainees</p>
                   </div>
                   <div className="icon">
@@ -67,37 +84,23 @@ const Dashboard = () => {
                 </div>
               </div>
               {/* ./col */}
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 {/* small box */}
                 <div className="small-box bg-success">
                   <div className="inner">
-                    <h3>44</h3>
+                    <h3>{count.instructor_count}</h3>
                     <p>Instructors</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-person-add" />
                   </div>
-                  <a href="#" className="small-box-footer">
+                  <Link to="/instructors" className="small-box-footer">
                     More info <i className="fas fa-arrow-circle-right" />
-                  </a>
+                  </Link>
                 </div>
               </div>
               {/* ./col */}
-              <div className="col-lg-3 col-6">
-                {/* small box */}
-                <div className="small-box bg-danger">
-                  <div className="inner">
-                    <h3>65</h3>
-                    <p>Scheduled Trainings</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-pie-graph" />
-                  </div>
-                  <a href="#" className="small-box-footer">
-                    More info <i className="fas fa-arrow-circle-right" />
-                  </a>
-                </div>
-              </div>
+
               {/* ./col */}
             </div>
             {/* /.row */}

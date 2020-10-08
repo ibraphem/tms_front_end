@@ -64,8 +64,8 @@ const TraineeCert = ({ id }) => {
 
   const columns = [
     {
-      title: "Training",
-      field: "course",
+      title: "Training Title",
+      field: "training_title",
       cellStyle: {
         width: 500,
         minWidth: 500,

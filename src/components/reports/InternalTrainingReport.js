@@ -223,7 +223,11 @@ const InternalTrainingReport = () => {
                                         key={internalTrainingReport.id}
                                       >
                                         <td>{i++}</td>
-                                        <td>{internalTrainingReport.course}</td>
+                                        <td>
+                                          {
+                                            internalTrainingReport.training_title
+                                          }
+                                        </td>
                                         <td>
                                           {" "}
                                           {formatDate(
@@ -276,7 +280,7 @@ const InternalTrainingReport = () => {
                                     >
                                       <td>{k++}</td>
                                       <td>{`${absentTrainee.first_name} ${absentTrainee.surname}`}</td>
-                                      <td>{absentTrainee.course}</td>
+                                      <td>{absentTrainee.training_title}</td>
                                       <td>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                       </td>
@@ -298,16 +302,20 @@ const InternalTrainingReport = () => {
                                         {internalTrainingReport.absent == 1 ? (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            scheduled for 1 personnel. The
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was scheduled for 1 personnel. The
                                             personnel scheduled for this
                                             training was absent.
                                           </>
                                         ) : (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            facilitated for 1 personnel. The
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was facilitated for 1 personnel. The
                                             personnel scheduled for this
                                             training was present.
                                           </>
@@ -318,8 +326,10 @@ const InternalTrainingReport = () => {
                                         {internalTrainingReport.absent === 1 ? (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            scheduled for{" "}
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was scheduled for{" "}
                                             {internalTrainingReport.present +
                                               internalTrainingReport.absent}{" "}
                                             personnel.{" "}
@@ -332,8 +342,10 @@ const InternalTrainingReport = () => {
                                           internalTrainingReport.present > 0 ? (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            successfully scheduled for{" "}
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was successfully scheduled for{" "}
                                             {internalTrainingReport.present +
                                               internalTrainingReport.absent}{" "}
                                             personnel.{" "}
@@ -346,8 +358,10 @@ const InternalTrainingReport = () => {
                                           0 ? (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            successfully scheduled for{" "}
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was successfully scheduled for{" "}
                                             {internalTrainingReport.present +
                                               internalTrainingReport.absent}{" "}
                                             personnel. All personnel scheduled
@@ -357,8 +371,10 @@ const InternalTrainingReport = () => {
                                           internalTrainingReport.present < 1 ? (
                                           <>
                                             {j++}.{" "}
-                                            {internalTrainingReport.course} was
-                                            scheduled for{" "}
+                                            {
+                                              internalTrainingReport.training_title
+                                            }{" "}
+                                            was scheduled for{" "}
                                             {internalTrainingReport.present +
                                               internalTrainingReport.absent}{" "}
                                             personnel. None of the personnel

@@ -93,13 +93,13 @@ const App = (props) => {
           email={email}
           password={password}
         />
-        <ProtectedRoute
+        {/* <ProtectedRoute
           exact
           path="/trainings/courses"
           component={Courses}
           email={email}
           password={password}
-        />
+        /> */}
         <ProtectedRoute
           exact
           path="/trainings/schedule"

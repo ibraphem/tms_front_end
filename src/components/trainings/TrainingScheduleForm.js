@@ -47,7 +47,8 @@ const TrainingScheduleForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [trainings, setTrainings] = useState([]);
   const [selectTrainees, setSelectTrainees] = useState([]);
-  const [selectTraining, setSelectTraining] = useState([]);
+  const [validity, setValidity] = useState("");
+  const [trainingTitle, setTrainingTitle] = useState("");
   const [selectInstructor, setSelectInstructor] = useState([]);
   const [cost, setCost] = useState("");
   const [venue, setVenue] = useState("");
@@ -78,8 +79,16 @@ const TrainingScheduleForm = () => {
     setSelectedDate(e.target.value);
   };
 
+  const handleTrainingTitleChange = (e) => {
+    setTrainingTitle(e.target.value);
+  };
+
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
+  };
+
+  const onchangeValidity = (e) => {
+    setValidity(e.target.value);
   };
 
   const schedule = (e) => {
@@ -93,7 +102,8 @@ const TrainingScheduleForm = () => {
 
     const formData = {
       trainees: selected_trainee_arr,
-      training: selectTraining,
+      training: trainingTitle,
+      validity: validity,
       instructor: selectInstructor,
       training_date: selectedDate,
       end_date: endDate,
@@ -109,10 +119,6 @@ const TrainingScheduleForm = () => {
     let errorList = [];
     if (formData.trainees === undefined || formData.trainees.length < 1) {
       errorList.push("Please select trainees.   ");
-      setIserror(true);
-    }
-    if (formData.training === undefined || formData.training.length < 1) {
-      errorList.push("Please select training.  ");
       setIserror(true);
     }
 
@@ -229,17 +235,54 @@ const TrainingScheduleForm = () => {
                   <Autocomplete
                     id="combo-box-demo"
                     size="small"
-                    options={training}
-                    required={true}
-                    getOptionLabel={(option) => option.course}
-                    onChange={(event, value) => setSelectTraining(value.id)}
+                    options={instructors}
+                    getOptionLabel={(option) => option.full_name}
+                    onChange={(event, value) => setSelectInstructor(value.id)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Select Training"
+                        label="Select Instructor"
                         variant="outlined"
                       />
                     )}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Paper className={classes.paper}>
+                  <TextField
+                    id="training"
+                    label="Enter Training Title"
+                    variant="outlined"
+                    size="small"
+                    required={true}
+                    fullWidth
+                    onChange={handleTrainingTitleChange}
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Paper className={classes.paper}>
+                  <b>Internal Training</b>
+                  <GreenRadio
+                    checked={selectedValue === "Internal"}
+                    onChange={handleChange}
+                    value="Internal"
+                    name="radio-button-demo"
+                    inputProps={{ "aria-label": "Internal" }}
+                  />
+                  &nbsp;&nbsp;&nbsp;<b>External Training</b>
+                  <Radio
+                    checked={selectedValue === "External"}
+                    onChange={handleChange}
+                    value="External"
+                    color="default"
+                    name="radio-button-demo"
+                    inputProps={{ "aria-label": "External" }}
                   />
                 </Paper>
               </Grid>
@@ -275,7 +318,7 @@ const TrainingScheduleForm = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <Paper className={classes.paper}>
                   <TextField
                     id="standard-basic"
@@ -286,7 +329,25 @@ const TrainingScheduleForm = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
+                <Paper className={classes.paper}>
+                  <TextField
+                    id="standard-basic"
+                    label="Validity"
+                    type="number"
+                    fullWidth
+                    onChange={onchangeValidity}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          Month(s){" "}
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={4}>
                 <Paper className={classes.paper}>
                   <TextField
                     id="standard-basic"
@@ -301,45 +362,6 @@ const TrainingScheduleForm = () => {
                         </InputAdornment>
                       ),
                     }}
-                  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Paper className={classes.paper}>
-                  <Autocomplete
-                    id="combo-box-demo"
-                    size="small"
-                    options={instructors}
-                    getOptionLabel={(option) => option.full_name}
-                    onChange={(event, value) => setSelectInstructor(value.id)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Select Instructor"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Paper className={classes.paper}>
-                  <b>Internal Training</b>
-                  <GreenRadio
-                    checked={selectedValue === "Internal"}
-                    onChange={handleChange}
-                    value="Internal"
-                    name="radio-button-demo"
-                    inputProps={{ "aria-label": "Internal" }}
-                  />
-                  &nbsp;&nbsp;&nbsp;<b>External Training</b>
-                  <Radio
-                    checked={selectedValue === "External"}
-                    onChange={handleChange}
-                    value="External"
-                    color="default"
-                    name="radio-button-demo"
-                    inputProps={{ "aria-label": "External" }}
                   />
                 </Paper>
               </Grid>

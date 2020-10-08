@@ -253,7 +253,9 @@ const InternalTrainingCostReport = () => {
                                               className={classes.tableRow}
                                             >
                                               <td>{i++}</td>
-                                              <td>{firstMonth.course}</td>
+                                              <td>
+                                                {firstMonth.training_title}
+                                              </td>
                                               <td>
                                                 {" "}
                                                 {formatDate(
@@ -345,7 +347,9 @@ const InternalTrainingCostReport = () => {
                                               className={classes.tableRow}
                                             >
                                               <td>{i++}</td>
-                                              <td>{secondMonth.course}</td>
+                                              <td>
+                                                {secondMonth.training_title}
+                                              </td>
                                               <td>
                                                 {" "}
                                                 {formatDate(
@@ -437,7 +441,9 @@ const InternalTrainingCostReport = () => {
                                               className={classes.tableRow}
                                             >
                                               <td>{i++}</td>
-                                              <td>{thirdMonth.course}</td>
+                                              <td>
+                                                {thirdMonth.training_title}
+                                              </td>
                                               <td>
                                                 {" "}
                                                 {formatDate(

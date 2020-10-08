@@ -87,7 +87,7 @@ const TrainingRecords = () => {
     },
     {
       title: "TRAINING",
-      field: "course",
+      field: "training_title",
       editable: "never",
       cellStyle: {
         width: 300,

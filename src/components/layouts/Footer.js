@@ -12,14 +12,14 @@ const Footer = () => {
 
   return (
     <div>
-      <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-        {/* Left navbar links */}
-        <div class="float-right d-none d-sm-inline-block">
+      <nav classname="main-header navbar navbar-expand navbar-white navbar-light">
+        {"{"}/* Left navbar links */{"}"}
+        <div className="float-right d-none d-sm-inline-block">
           <strong>
             <i>Powered By IT Unit</i>
           </strong>
         </div>
-        {/* Right navbar links */}
+        {"{"}/* Right navbar links */{"}"}
       </nav>
     </div>
   );

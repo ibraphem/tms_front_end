@@ -78,12 +78,12 @@ const NavBar = () => {
                   </p>
                 </a>
                 <ul className="nav nav-treeview">
-                  <li className="nav-item">
+                  {/*} <li className="nav-item">
                     <Link to="/trainings/courses" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Courses</p>
                     </Link>
-                  </li>
+                  </li> */}
 
                   <li className="nav-item">
                     <Link to="/trainings/schedule" className="nav-link">
