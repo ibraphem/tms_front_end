@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import axios from "axios";
 
 const ProtectedRoute = ({ component: Component, email, password, ...rest }) => {
   // console.log(email + "..." + password);
-  const [authToken, setAuthToken] = useState("");
+  // const [authToken, setAuthToken] = useState("");
 
-  {
-    /* const aunthenticate = async () => {
+  /*  {
+     const aunthenticate = async () => {
     let formData = {
       email: email,
       password: password,
@@ -27,8 +26,8 @@ const ProtectedRoute = ({ component: Component, email, password, ...rest }) => {
 
   useEffect(() => {
     aunthenticate();
-  }); */
-  }
+  });
+  } */
 
   return (
     <Route

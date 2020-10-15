@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from "axios";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,14 +109,14 @@ const InternalTrainingReport = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#" onClick={show_filter}>
+                  <Link to="#" onClick={show_filter}>
                     {showFilter ? "" : "Show Filter"}
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumb-item active">
-                  <a href="#" onClick={print}>
+                  <Link to="#" onClick={print}>
                     {showFilter ? "" : "Print"}
-                  </a>
+                  </Link>
                 </li>
               </ol>
             </div>
@@ -299,7 +300,7 @@ const InternalTrainingReport = () => {
                                     {internalTrainingReport.sch_students ===
                                     1 ? (
                                       <p className={classes.divFont}>
-                                        {internalTrainingReport.absent == 1 ? (
+                                        {internalTrainingReport.absent === 1 ? (
                                           <>
                                             {j++}.{" "}
                                             {

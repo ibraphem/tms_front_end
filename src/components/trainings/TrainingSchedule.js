@@ -87,7 +87,7 @@ const TrainingSchedule = () => {
     history.push("/scheduleform");
   };
 
-  const fetchParticipants = (schedule_id) => {
+  /*const fetchParticipants = (schedule_id) => {
     axios
       .post("http://127.0.0.1:8000/api/trainees/participant", schedule_id)
       .then((response) => {
@@ -97,7 +97,7 @@ const TrainingSchedule = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  };*/
 
   const columns = [
     {
@@ -126,25 +126,6 @@ const TrainingSchedule = () => {
         margin: 0,
       },
       lookup: { Internal: "Internal", External: "External" },
-    },
-
-    {
-      title: "VALIDITY",
-      field: "validity",
-
-      cellStyle: {
-        padding: 0,
-        margin: 0,
-        borderSpacing: 0,
-      },
-      render: (row) => (
-        <span>
-          {" "}
-          {row["validity"] !== null
-            ? row["validity"] + " Months"
-            : "No Expiration"}
-        </span>
-      ),
     },
 
     {
@@ -284,7 +265,7 @@ const TrainingSchedule = () => {
     }
   };
 
-  const handleRowDelete = (oldData, resolve) => {
+  /* const handleRowDelete = (oldData, resolve) => {
     console.log(oldData.schedule_id);
     axios
       .delete(
@@ -302,7 +283,7 @@ const TrainingSchedule = () => {
         setIserror(true);
         resolve();
       });
-  };
+  };*/
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -315,7 +296,7 @@ const TrainingSchedule = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Training</a>
+                  <span>Training</span>
                 </li>
                 <li className="breadcrumb-item active">Schedule</li>
               </ol>

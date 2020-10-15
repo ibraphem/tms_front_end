@@ -7,28 +7,28 @@ const NavBar = () => {
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
         <div style={{ backgroundColor: "#fff" }}>
-          <a href="index3.html" className="brand-link">
+          <Link to="/dashboard" className="brand-link">
             <img
               src="dist/img/logo.png"
-              alt="AdminLTE Logo"
+              alt="logo"
               style={{
                 width: "300px",
                 height: "60px",
                 padding: "10px",
               }}
             />
-          </a>
+          </Link>
         </div>
         {/* Sidebar */}
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}
-          <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+          {/*}    <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="info">
               <a href="#" className="d-block">
                 <b>Training Management System</b>
               </a>
             </div>
-          </div>
+          </div> */}
           {/* Sidebar Menu */}
           <nav className="mt-2">
             <ul
@@ -46,13 +46,13 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className="nav-item has-treeview menu-open">
-                <a className="nav-link ">
+                <Link to="#" className="nav-link ">
                   <i className="nav-icon fas fa-tachometer-alt" />
                   <p>
                     Trainees
                     <i className="right fas fa-angle-left" />
                   </p>
-                </a>
+                </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
                     <Link to="/trainees/active" className="nav-link">
@@ -70,13 +70,13 @@ const NavBar = () => {
               </li>
 
               <li className="nav-item has-treeview menu-open">
-                <a className="nav-link">
+                <Link to="#" className="nav-link">
                   <i className="nav-icon fas fa-copy" />
                   <p>
                     Trainings
                     <i className="fas fa-angle-left right" />
                   </p>
-                </a>
+                </Link>
                 <ul className="nav nav-treeview">
                   {/*} <li className="nav-item">
                     <Link to="/trainings/courses" className="nav-link">
@@ -100,13 +100,13 @@ const NavBar = () => {
                 </ul>
               </li>
               <li className="nav-item has-treeview menu-open">
-                <a className="nav-link">
+                <Link to="#" className="nav-link">
                   <i className="nav-icon fas fa-copy" />
                   <p>
                     Reports
                     <i className="fas fa-angle-left right" />
                   </p>
-                </a>
+                </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
                     <Link to="/internal/report" className="nav-link">
@@ -135,10 +135,10 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="pages/widgets.html" className="nav-link">
+                <Link to="/training/request" className="nav-link">
                   <i className="nav-icon fas fa-th" />
                   <p>Training Request</p>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

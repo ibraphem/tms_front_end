@@ -6,6 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +63,7 @@ const ExternalTrainingCostReport = () => {
   const [thirdMonthSums, setThirdMonthSums] = useState([]);
   const [thirdMonthCounts, setThirdMonthCounts] = useState([]);
   const [totalSums, setTotalSums] = useState([]);
-  const [totalCounts, setTotalCounts] = useState([]);
+
   const [year, setYear] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -89,12 +90,11 @@ const ExternalTrainingCostReport = () => {
         setThirdMonthSums(response.data.c_sum);
         setThirdMonthCounts(response.data.c_count);
         setTotalSums(response.data.t_sum);
-        setTotalCounts(response.data.t_count);
         setIsLoading(false);
       });
   };
 
-  let date = new Date();
+  // let date = new Date();
   let i = 1;
 
   const print = () => {
@@ -117,14 +117,14 @@ const ExternalTrainingCostReport = () => {
             <div className="col-sm-4">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#" onClick={show_filter}>
+                  <Link to="#" onClick={show_filter}>
                     {showFilter ? "" : "Show Filter"}
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumb-item active">
-                  <a href="#" onClick={print}>
+                  <Link to="#" onClick={print}>
                     {showFilter ? "" : "Print"}
-                  </a>
+                  </Link>
                 </li>
               </ol>
             </div>
@@ -228,9 +228,8 @@ const ExternalTrainingCostReport = () => {
                               {/* /.card-header */}
                               <div className="card-body">
                                 <table
-                                  className={classes.table}
+                                  className={`${classes.table} table table-bordered table-hover`}
                                   id="example2"
-                                  className="table table-bordered table-hover"
                                 >
                                   <thead>
                                     <tr>

@@ -1,11 +1,9 @@
 import React, { forwardRef, useState, useEffect } from "react";
 import axios from "axios";
-import { CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
-import InfoIcon from "@material-ui/icons/Info";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Clear from "@material-ui/icons/Clear";
@@ -66,7 +64,7 @@ const InstructorCourse = ({ id }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [id]);
 
   const columns = [
     {
@@ -97,7 +95,7 @@ const InstructorCourse = ({ id }) => {
   );
 
   const handleRowUpdate = (newData, oldData, resolve) => {
-    let exp_DATE = newData.licence_expiry_date;
+    //   let exp_DATE = newData.licence_expiry_date;
     let licence_expiry_date = new Date(newData.licence_expiry_date)
       .toISOString()
       .slice(0, 10);
@@ -125,7 +123,7 @@ const InstructorCourse = ({ id }) => {
   };
 
   const handleRowAdd = (newData, resolve) => {
-    let exp_DATE = newData.licence_expiry_date;
+    //  let exp_DATE = newData.licence_expiry_date;
     let course_title = newData.course_title;
     //  console.log(course_title);
     let licence_expiry_date = new Date(newData.licence_expiry_date)

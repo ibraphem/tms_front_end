@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Header = () => {
   const history = useHistory();
@@ -13,21 +13,21 @@ const Header = () => {
         {/* Left navbar links */}
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               data-widget="pushmenu"
-              href="#"
+              to="#"
               role="button"
             >
               <i className="fas fa-bars" />
-            </a>
+            </Link>
           </li>
         </ul>
 
         {/* Right navbar links */}
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}
-          <li className="nav-item dropdown">
+          {/*    <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
               <i className="far fa-bell" />
               <span className="badge badge-danger navbar-badge">15</span>
@@ -56,13 +56,13 @@ const Header = () => {
                 See All Notifications
               </a>
             </div>
-          </li>
+  </li> */}
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               data-widget="control-sidebar"
               data-slide="true"
-              href="#"
+              to="#"
               onClick={logout}
               role="button"
             >
@@ -72,7 +72,7 @@ const Header = () => {
                 title="Logout"
                 className="fa fa-user"
               />
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

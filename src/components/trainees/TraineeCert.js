@@ -1,6 +1,5 @@
 import React, { forwardRef, useState, useEffect } from "react";
 import axios from "axios";
-import { CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -60,7 +59,7 @@ const TraineeCert = ({ id }) => {
         //  console.log(response.data);
         setTrainingCert(response.data);
       });
-  }, []);
+  }, [id]);
 
   const columns = [
     {

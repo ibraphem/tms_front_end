@@ -14,7 +14,7 @@ const ScheduleTraining = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Training</a>
+                  <span>Training</span>
                 </li>
                 <li className="breadcrumb-item active">Schedule</li>
               </ol>

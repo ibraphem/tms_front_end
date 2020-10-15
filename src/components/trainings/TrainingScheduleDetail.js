@@ -41,7 +41,7 @@ const StyledTableCell = withStyles((theme) => ({
 const TrainingScheduleDetail = ({ schedule_id }) => {
   // console.log(schedule_id);
   const [participants, setParticipants] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [selectTrainees, setSelectTrainees] = useState([]);
   const [trainees, setTrainees] = useState([]);
 
@@ -53,9 +53,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
       .get(`http://127.0.0.1:8000/api/addparticipant/${schedule_id}`)
       .then((response) => {
         if (mounted) {
-          setIsLoading(true);
           setTrainees(response.data);
-          setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -65,7 +63,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
 
   useEffect(() => {
     let mounted = true;
-    setIsLoading(true);
+
     axios
       .get(
         `http://127.0.0.1:8000/api/trainingschedule/participants/${schedule_id}`
@@ -73,19 +71,29 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
       .then((response) => {
         if (mounted) {
           setParticipants(response.data);
-          setIsLoading(false);
         }
       })
       .catch((error) => {
         console.log(error);
       });
 
-    toTrainees();
+    // toTrainees();
+
+    axios
+      .get(`http://127.0.0.1:8000/api/addparticipant/${schedule_id}`)
+      .then((response) => {
+        if (mounted) {
+          setTrainees(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [schedule_id]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -157,9 +165,9 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
       });
   };
 
-  const test = (e) => {
+  /* const test = (e) => {
     console.log(e.target.value);
-  };
+  }; */
 
   // console.log(participants);
   return (

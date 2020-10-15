@@ -209,7 +209,7 @@ const ActiveStaffs = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Trainees</a>
+                  <span>Trainees</span>
                 </li>
                 <li className="breadcrumb-item active">Active</li>
               </ol>

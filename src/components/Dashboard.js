@@ -1,34 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ThisMonthExpiry from "./dashboard/ThisMonthExpiry";
+import NextMonthExpiry from "./dashboard/NextMonthExpiry";
+import ThisMonthTrainings from "./dashboard/ThisMonthTrainings";
 
 const Dashboard = () => {
   const [count, setCount] = useState("");
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [thisMonth, setThisMonth] = useState([]);
-  const [nextMonth, setNextMonth] = useState([]);
-
   useEffect(() => {
-    setIsLoading(true);
     axios
       .get("http://127.0.0.1:8000/api/count")
       .then((response) => {
         console.log(response.data);
         setCount(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get("http://127.0.0.1:8000/api/expiry")
-      .then((response) => {
-        console.log(response.data);
-        setThisMonth(response.data.this_month_expiry);
-        setNextMonth(response.data.next_month_expiry);
-        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +34,7 @@ const Dashboard = () => {
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <span>Home</span>
                   </li>
                   <li className="breadcrumb-item active">Dashboard</li>
                 </ol>
@@ -121,6 +106,7 @@ const Dashboard = () => {
             {/* Main row */}
             <div className="row">
               <section className="col-lg-6 connectedSortable">
+                <ThisMonthExpiry />
                 {/* Map card */}
                 <div className="card bg-gradient-danger">
                   <div className="card-header border-0">
@@ -128,63 +114,29 @@ const Dashboard = () => {
                       <i className="fas fa-map-marker-alt mr-1" />
                       Training Expiring This Month
                     </h3>
-                    {/* card tools */}
-                    <div className="card-tools">
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm"
-                        data-card-widget="collapse"
-                        data-toggle="tooltip"
-                        title="Collapse"
-                      >
-                        <i className="fas fa-minus" />
-                      </button>
-                    </div>
-                    {/* /.card-tools */}
                   </div>
-                  <div className="card-body">
-                    <div
-                      id="world-map"
-                      style={{ height: 250, width: "100%" }}
-                    />
-                  </div>
-                  {/* /.card-body*/}
                 </div>
               </section>
 
               <section className="col-lg-6 connectedSortable">
+                <NextMonthExpiry />
                 {/* Map card */}
-                <div className="card bg-gradient-success">
+                <div className="card bg-gradient-warning">
                   <div className="card-header border-0">
                     <h3 className="card-title">
                       <i className="fas fa-map-marker-alt mr-1" />
-                      Training Expiring This Month
+                      Training Expiring Next Month
                     </h3>
-                    {/* card tools */}
-                    <div className="card-tools">
-                      <button
-                        type="button"
-                        className="btn btn-success btn-sm"
-                        data-card-widget="collapse"
-                        data-toggle="tooltip"
-                        title="Collapse"
-                      >
-                        <i className="fas fa-minus" />
-                      </button>
-                    </div>
-                    {/* /.card-tools */}
                   </div>
-                  <div className="card-body">
-                    <div
-                      id="world-map"
-                      style={{ height: 250, width: "100%" }}
-                    />
-                  </div>
-                  {/* /.card-body*/}
                 </div>
               </section>
+            </div>
 
-              {/* right col */}
+            <div className="row">
+              <section className="col-lg-12 connectedSortable">
+                <ThisMonthTrainings />
+                {/* Map card */}
+              </section>
             </div>
             {/* /.row (main row) */}
           </div>

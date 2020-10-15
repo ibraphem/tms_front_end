@@ -18,7 +18,7 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import SendIcon from "@material-ui/icons/Send";
+
 import moment from "moment";
 
 const TrainingRecords = () => {
@@ -67,8 +67,6 @@ const TrainingRecords = () => {
         console.log(err);
       });
   }, []);
-
-  const sentToResgistry = () => {};
 
   const columns = [
     {
@@ -176,7 +174,7 @@ const TrainingRecords = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Training</a>
+                  <span href="#">Training</span>
                 </li>
                 <li className="breadcrumb-item active">Records</li>
               </ol>

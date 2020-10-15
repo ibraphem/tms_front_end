@@ -9,7 +9,7 @@ import Check from "@material-ui/icons/Check";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Clear from "@material-ui/icons/Clear";
-
+import ImportExportIcon from "@material-ui/icons/ImportExport";
 import Edit from "@material-ui/icons/Edit";
 import FilterList from "@material-ui/icons/FilterList";
 import FirstPage from "@material-ui/icons/FirstPage";
@@ -55,6 +55,22 @@ const ExitedStaffs = () => {
   const [iserror, setIserror] = useState(null);
   const [alertMessage, setAlertMessage] = useState([]);
 
+  const handleActive = (rowData) => {
+    axios
+      .put(`http://127.0.0.1:8000/api/trainee/active/${rowData.id}`)
+      .then((response) => {
+        console.log(response.data);
+        setTrainees(response.data);
+        setAlertMessage(["Trainee is active again "]);
+        setIserror(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setAlertMessage(["Oops, something went wrong!!!   "]);
+        setIserror(true);
+      });
+  };
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -95,7 +111,7 @@ const ExitedStaffs = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Trainees</a>
+                  <span>Trainees</span>
                 </li>
                 <li className="breadcrumb-item active">Exited</li>
               </ol>
@@ -142,6 +158,15 @@ const ExitedStaffs = () => {
                       tooltip: "Show Name",
                       render: (rowData) => {
                         return <TraineeCert id={rowData.id} />;
+                      },
+                    },
+                  ]}
+                  actions={[
+                    {
+                      icon: () => <ImportExportIcon />,
+                      tooltip: "Make trainee active again",
+                      onClick: (event, rowData) => {
+                        handleActive(rowData);
                       },
                     },
                   ]}

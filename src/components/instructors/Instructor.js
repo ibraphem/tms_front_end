@@ -5,7 +5,6 @@ import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
-import InfoIcon from "@material-ui/icons/Info";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Clear from "@material-ui/icons/Clear";
@@ -153,7 +152,7 @@ const Instructor = () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <a href="#">Instructors</a>
+                  <span>Instructors</span>
                 </li>
                 <li className="breadcrumb-item active">Courses</li>
               </ol>
