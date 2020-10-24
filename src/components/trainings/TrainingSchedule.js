@@ -329,7 +329,7 @@ const TrainingSchedule = () => {
                   options={{
                     search: true,
                     sorting: true,
-                    exportButton: true,
+                    exportButton: false,
 
                     headerStyle: {
                       backgroundColor: "#01579b",
