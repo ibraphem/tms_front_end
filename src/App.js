@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NavBar from "./components/layouts/NavBar";
 import Header from "./components/layouts/Header";
-//import Footer from "./components/layouts/Footer";
+import Register from "./components/auth/Register";
 import ActiveStaffs from "./components/trainees/ActiveStaffs";
 import ExitedStaffs from "./components/trainees/ExitedStaffs";
 import TrainingSchedule from "./components/trainings/TrainingSchedule";
@@ -22,6 +22,8 @@ import TrainingRequests from "./components/trainingRequests/TrainingRequests";
 const App = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [iserror, setIserror] = useState();
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const history = useHistory();
 
@@ -43,20 +45,22 @@ const App = (props) => {
     axios
       .post("http://127.0.0.1:8000/api/user/login", formData)
       .then((response) => {
-        console.log("Login Successfull");
-        // console.log(response.data);
+        setIserror(false);
+
         localStorage.setItem("userToken", response.data.token);
         history.push("/dashboard");
       })
 
       .catch((error) => {
-        alert("Incorrect Login credential");
+        setIserror(true);
+        setAlertMessage("Incorrect Login Credential");
         console.log(error);
       });
   };
 
   return (
     <Switch>
+      <Route exact path="/register" component={Register} />
       <Route
         exact
         path="/"
@@ -65,6 +69,8 @@ const App = (props) => {
             onChangeEmail={onChangeEmail}
             onChangePassword={onChangePassword}
             onSubmit={login}
+            iserror={iserror}
+            alertMessage={alertMessage}
           />
         )}
       />
@@ -72,7 +78,13 @@ const App = (props) => {
       <>
         <Header />
         <NavBar />
-        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        <ProtectedRoute
+          exact
+          path="/dashboard"
+          component={Dashboard}
+          email={email}
+          password={password}
+        />
         <ProtectedRoute
           exact
           path="/trainees/active"

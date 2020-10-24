@@ -267,20 +267,20 @@ const TrainingScheduleForm = () => {
                 <Paper className={classes.paper}>
                   <b>Internal Training</b>
                   <GreenRadio
-                    checked={selectedValue === "Internal"}
+                    checked={selectedValue === "INTERNAL"}
                     onChange={handleChange}
-                    value="Internal"
+                    value="INTERNAL"
                     name="radio-button-demo"
-                    inputProps={{ "aria-label": "Internal" }}
+                    inputProps={{ "aria-label": "INTERNAL" }}
                   />
                   &nbsp;&nbsp;&nbsp;<b>External Training</b>
                   <Radio
-                    checked={selectedValue === "External"}
+                    checked={selectedValue === "EXTERNAL"}
                     onChange={handleChange}
-                    value="External"
+                    value="EXTERNAL"
                     color="default"
                     name="radio-button-demo"
-                    inputProps={{ "aria-label": "External" }}
+                    inputProps={{ "aria-label": "EXTERNAL" }}
                   />
                 </Paper>
               </Grid>

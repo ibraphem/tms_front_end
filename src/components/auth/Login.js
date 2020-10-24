@@ -8,8 +8,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import ErrorAlert from "../alerts/ErrorAlert";
 
-const Login = ({ onSubmit, onChangeEmail, onChangePassword }) => {
+const Login = ({
+  onSubmit,
+  onChangeEmail,
+  onChangePassword,
+  iserror,
+  alertMessage,
+}) => {
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -42,12 +49,15 @@ const Login = ({ onSubmit, onChangeEmail, onChangePassword }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={onSubmit}>
+          <Typography component="h1" variant="h5">
+            {iserror ? <ErrorAlert message={alertMessage} /> : null}
+          </Typography>
+          <form className={classes.form} onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   type="email"
                   id="email"
@@ -60,14 +70,13 @@ const Login = ({ onSubmit, onChangeEmail, onChangePassword }) => {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
                   onChange={onChangePassword}
-                  autoComplete="current-password"
                 />
               </Grid>
             </Grid>

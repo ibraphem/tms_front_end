@@ -338,7 +338,7 @@ const InternalTrainingCostReport = () => {
                                         </>
                                       )}
 
-                                      {secondMonths.length > 1 ? (
+                                      {secondMonths.length > 0 ? (
                                         <>
                                           {secondMonths.map((secondMonth) => (
                                             <tr

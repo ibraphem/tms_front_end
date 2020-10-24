@@ -125,7 +125,7 @@ const TrainingSchedule = () => {
         padding: 0,
         margin: 0,
       },
-      lookup: { Internal: "Internal", External: "External" },
+      lookup: { INTERNAL: "INTERNAL", EXTERNAL: "EXTERNAL" },
     },
 
     {

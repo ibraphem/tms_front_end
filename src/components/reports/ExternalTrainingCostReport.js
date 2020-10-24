@@ -203,22 +203,22 @@ const ExternalTrainingCostReport = () => {
                                 <h5 className={classes.tableTitle}>
                                   {value === "first" ? (
                                     <b>
-                                      INTERNAL TRAINING CONDUCTED DURING THE
+                                      EXTERNAL TRAINING CONDUCTED DURING THE
                                       FIRST QUARTER (JANUARY - MARCH, {year})
                                     </b>
                                   ) : value === "second" ? (
                                     <b>
-                                      INTERNAL TRAINING CONDUCTED DURING THE
+                                      EXTERNAL TRAINING CONDUCTED DURING THE
                                       SECOND QUARTER (APRIL - JUNE, {year})
                                     </b>
                                   ) : value === "third" ? (
                                     <b>
-                                      INTERNAL TRAINING CONDUCTED DURING THE
+                                      EXTERNAL TRAINING CONDUCTED DURING THE
                                       THIRD QUARTER (JULY - SEPTEMBER, {year})
                                     </b>
                                   ) : (
                                     <b>
-                                      INTERNAL TRAINING CONDUCTED DURING THE
+                                      EXTERNAL TRAINING CONDUCTED DURING THE
                                       FOURTH QUARTER (OCTOBER - DECEMBER, {year}
                                       )
                                     </b>
@@ -338,7 +338,7 @@ const ExternalTrainingCostReport = () => {
                                         </>
                                       )}
 
-                                      {secondMonths.length > 1 ? (
+                                      {secondMonths.length > 0 ? (
                                         <>
                                           {secondMonths.map((secondMonth) => (
                                             <tr
