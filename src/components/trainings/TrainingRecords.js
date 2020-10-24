@@ -111,9 +111,10 @@ const TrainingRecords = () => {
       render: (row) => (
         <span>
           {" "}
-          {row["expiry_date"] !== null
-            ? formatDate(row["expiry_date"])
-            : "No Expiration"}
+          {row["expiry_date"] === null ||
+          row["training_title"].includes("INITIAL")
+            ? "No Expiration"
+            : formatDate(row["expiry_date"])}
         </span>
       ),
     },

@@ -98,9 +98,10 @@ const TraineeCert = ({ id }) => {
       render: (row) => (
         <span>
           {" "}
-          {row["expiry_date"] !== null
-            ? formatDate(row["expiry_date"])
-            : "No Expiration"}
+          {row["expiry_date"] === null ||
+          row["training_title"].includes("INITIAL")
+            ? "No Expiration"
+            : formatDate(row["expiry_date"])}
         </span>
       ),
     },
@@ -130,7 +131,8 @@ const TraineeCert = ({ id }) => {
 
           rowStyle: (rowData) => ({
             backgroundColor:
-              rowData.expiry_date === null
+              rowData.expiry_date === null ||
+              rowData["training_title"].includes("INITIAL")
                 ? "green"
                 : today >= new Date(rowData.expiry_date)
                 ? "red"
