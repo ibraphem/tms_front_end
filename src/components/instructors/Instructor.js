@@ -58,7 +58,7 @@ const Instructor = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/instructor")
+      .get("http://tmsapi.db/api/instructor")
       .then((response) => {
         setInstructors(response.data);
         setIsLoading(false);
@@ -86,7 +86,7 @@ const Instructor = () => {
     if (errorList.length < 1) {
       //no error
       axios
-        .post("http://127.0.0.1:8000/api/instructor/store", newData)
+        .post("http://tmsapi.db/api/instructor/store", newData)
         .then((response) => {
           setInstructors(response.data);
           resolve();
@@ -116,13 +116,10 @@ const Instructor = () => {
 
     if (errorList.length < 1) {
       axios
-        .put(
-          `http://127.0.0.1:8000/api/instructor/update/${oldData.id}`,
-          newData
-        )
+        .post(`http://tmsapi.db/api/instructor/update/${oldData.id}`, newData)
         .then((response) => {
           setInstructors(response.data);
-          setAlertMessage(["Trainee Record Updated Successfully  "]);
+          setAlertMessage(["Instructor Record Updated Successfully  "]);
           setIserror(false);
           resolve();
         })
@@ -188,7 +185,7 @@ const Instructor = () => {
                   options={{
                     search: true,
                     sorting: true,
-                    exportButton: true,
+                    exportButton: false,
                     headerStyle: {
                       backgroundColor: "#01579b",
                       color: "#FFF",

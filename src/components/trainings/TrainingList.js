@@ -66,7 +66,7 @@ const CertificateList = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/certificate")
+      .get("http://tmsapi.db/api/certificate")
       .then((response) => {
         setCertificates(response.data);
         setIsLoading(false);

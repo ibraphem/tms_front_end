@@ -55,6 +55,12 @@ const NavBar = () => {
                 </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
+                    <Link to="/trainees/department" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Stations/Depts/Units</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
                     <Link to="/trainees/active" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Active Staffs</p>

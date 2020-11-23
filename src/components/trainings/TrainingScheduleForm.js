@@ -57,6 +57,7 @@ const TrainingScheduleForm = () => {
   const [alertMessage, setAlertMessage] = useState([]);
   const [inactive, setInactive] = useState(false);
   const [instructors, setInstructors] = useState([]);
+  const [department, setDepartment] = useState([]);
   const history = useHistory();
 
   const classes = useStyles();
@@ -67,6 +68,7 @@ const TrainingScheduleForm = () => {
 
   const onChangeCost = (e) => {
     setCost(e.target.value);
+    //  console.log(e.target.value);
   };
 
   const handleChange = (event) => {
@@ -83,6 +85,27 @@ const TrainingScheduleForm = () => {
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
+  };
+
+  const handleDepartmentChange = (value) => {
+    //  console.log(value);
+
+    axios
+      .get(`http://tmsapi.db/api/dept/${value.id}`)
+      .then((response) => {
+        setIsLoading(true);
+        console.log(response.data);
+        setTrainees(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let trainee = [];
+    for (let i = 0; i < trainees.length; i++) {
+      trainee.push(trainees[i]);
+    }
   };
 
   const onchangeValidity = (e) => {
@@ -110,7 +133,7 @@ const TrainingScheduleForm = () => {
       training_type: selectedValue,
     };
 
-    console.log(formData.training_type);
+    // console.log(formData.training_type);
 
     //   console.log(formData);
 
@@ -128,7 +151,7 @@ const TrainingScheduleForm = () => {
     if (errorList.length < 1) {
       //no error
       axios
-        .post("http://127.0.0.1:8000/api/trainingschedule/store", formData)
+        .post("http://tmsapi.db/api/trainingschedule/store", formData)
         .then((response) => {
           console.log(response.data);
           setInactive(true);
@@ -150,7 +173,7 @@ const TrainingScheduleForm = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/trainee")
+      .get("http://tmsapi.db/api/trainee")
       .then((response) => {
         setIsLoading(true);
         setTrainees(response.data);
@@ -161,10 +184,9 @@ const TrainingScheduleForm = () => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/courses")
+      .get("http://tmsapi.db/api/department")
       .then((response) => {
-        setIsLoading(true);
-        setTrainings(response.data);
+        setDepartment(response.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -172,7 +194,7 @@ const TrainingScheduleForm = () => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/instructor")
+      .get("http://tmsapi.db/api/instructor")
       .then((response) => {
         setInstructors(response.data);
         setIsLoading(false);
@@ -206,6 +228,26 @@ const TrainingScheduleForm = () => {
               <Grid item xs={12} sm={6}>
                 <Paper className={classes.paper}>
                   <Autocomplete
+                    id="combo-box-demo"
+                    size="small"
+                    options={department}
+                    getOptionLabel={(option) => option.station}
+                    onChange={(event, value) => {
+                      handleDepartmentChange(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select Station/Unit/Dept"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Paper className={classes.paper}>
+                  <Autocomplete
                     multiple
                     id="size-small-outlined-multi"
                     size="small"
@@ -228,24 +270,7 @@ const TrainingScheduleForm = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Paper className={classes.paper}>
-                  <Autocomplete
-                    id="combo-box-demo"
-                    size="small"
-                    options={instructors}
-                    getOptionLabel={(option) => option.full_name}
-                    onChange={(event, value) => setSelectInstructor(value.id)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Select Instructor"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                </Paper>
-              </Grid>
+
               <Grid item xs={12} sm={6}>
                 <Paper className={classes.paper}>
                   <TextField
@@ -284,7 +309,26 @@ const TrainingScheduleForm = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
+                <Paper className={classes.paper}>
+                  <Autocomplete
+                    id="combo-box-demo"
+                    size="small"
+                    options={instructors}
+                    getOptionLabel={(option) => option.full_name}
+                    onChange={(event, value) => setSelectInstructor(value.id)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select Instructor"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} sm={4}>
                 <Paper className={classes.paper}>
                   <TextField
                     id="start_date"
@@ -300,7 +344,7 @@ const TrainingScheduleForm = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <Paper className={classes.paper}>
                   <TextField
                     id="end_date"

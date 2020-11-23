@@ -39,7 +39,7 @@ const Register = () => {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/user/register", formData)
+      .post("http://tmsapi.db/api/user/register", formData)
       .then((response) => {
         console.log(response);
         alert("registration succesful");

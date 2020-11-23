@@ -1,73 +1,146 @@
 import React, { useState, useEffect } from "react";
-import { render } from "react-dom";
-import { TableRow, TableCell, Switch } from "@material-ui/core";
+import axios from "axios";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import moment from "moment";
+import PrintIcon from "@material-ui/icons/Print";
+import { IconButton } from "@material-ui/core";
+import Printer from "../layouts/Printer";
 
-const TestTrainees = () => {
-  const [name, setName] = useState("React");
-  const [students, setStudents] = useState([
-    {
-      ROLLNO: 2344,
-      STNAME: "Jones",
-    },
-    {
-      ROLLNO: 12200,
-      STNAME: "James",
-    },
-    {
-      ROLLNO: 1289,
-      STNAME: "Jane",
-    },
-    {
-      ROLLNO: 12,
-      STNAME: "Peter",
-    },
-  ]);
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+  button: {
+    margin: "2px",
+  },
+  rowColor: {
+    color: "#fff",
+  },
+});
 
-  const [switchState, setSwitchState] = useState({});
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#000",
+    color: "#fff",
+  },
+  body: {
+    backgroundColor: "#000",
+    color: "#fff",
+  },
+}))(TableCell);
 
-  const handleChange = (index, event, checked) => {
-    const list = Object.assign({}, switchState);
+const TestTrainees = ({ id }) => {
+  const [trainingCert, setTrainingCert] = useState([]);
 
-    list["switch-" + index] = checked;
+  const classes = useStyles();
 
-    setSwitchState(list);
+  let today = new Date();
+  let twoMonthtime = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 2,
+    new Date().getDate()
+  );
+
+  const formatDate = (date) => {
+    if (date !== "" && date !== null) {
+      return moment(date).format("MMM DD YYYY");
+    } else {
+      return "No expiration";
+    }
   };
 
-  const setDynamicSwitchState = (list) => {
-    if (!list) {
-      return;
-    }
-
-    const switchState = {};
-
-    list.forEach((item, index) => {
-      switchState["switch-" + index] = false;
-    });
-
-    setSwitchState(switchState);
+  const print = () => {
+    window.print();
   };
 
   useEffect(() => {
-    setDynamicSwitchState(students);
-  });
+    let mounted = true;
+    axios
+      .get(`http://tmsapi.db/api/showtrainings/${id}`)
+      .then((response) => {
+        if (mounted) {
+          setTrainingCert(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [id]);
 
-  const studentss = students.map((post, i) => (
-    <TableRow key={i} className="tblFont">
-      <TableCell scope="row">{post.ROLLNO}</TableCell>
-      <TableCell>{post.STNAME}</TableCell>
-      <TableCell>
-        <Switch
-          key={i}
-          checked={switchState["switch-" + i]}
-          onChange={(event, checked) => handleChange(i, event, checked)}
-          value="checkedB"
-          color="primary"
-        />
-      </TableCell>
-    </TableRow>
-  ));
+  console.log(trainingCert);
 
-  return <div>{studentss}</div>;
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell colSpan="4" align="center">
+              Training Title
+            </StyledTableCell>
+            <StyledTableCell align="center">
+              <IconButton aria-label="Print" onClick={print}>
+                <PrintIcon style={{ color: "#fff" }} />
+              </IconButton>
+            </StyledTableCell>
+          </TableRow>
+          <TableRow>
+            <StyledTableCell>Training Title</StyledTableCell>
+            <StyledTableCell>Start Date</StyledTableCell>
+            <StyledTableCell>End Date</StyledTableCell>
+            <StyledTableCell>Expiry Date</StyledTableCell>
+            <StyledTableCell>Cost</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {trainingCert.map((trainingCer) => (
+            <TableRow
+              key={trainingCer.id}
+              style={
+                trainingCer.expiry_date === null ||
+                trainingCer.training_title.includes("INITIAL")
+                  ? { background: "green" }
+                  : today >= new Date(trainingCer.expiry_date)
+                  ? { background: "red" }
+                  : new Date(trainingCer.expiry_date) <= twoMonthtime
+                  ? { background: "#cccc00" }
+                  : { background: "green" }
+              }
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                className={classes.rowColor}
+              >
+                {trainingCer.training_title}
+              </TableCell>
+              <TableCell align="right" className={classes.rowColor}>
+                {formatDate(trainingCer.training_start_date)}
+              </TableCell>
+              <TableCell align="right" className={classes.rowColor}>
+                {formatDate(trainingCer.training_end_date)}
+              </TableCell>
+              <TableCell align="right" className={classes.rowColor}>
+                {formatDate(trainingCer.expiry_date)}
+              </TableCell>
+              <TableCell align="right" className={classes.rowColor}>
+                &#8358;{trainingCer.cost}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 };
 
 export default TestTrainees;

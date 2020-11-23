@@ -67,7 +67,7 @@ const Courses = () => {
     if (errorList.length < 1) {
       //no error
       axios
-        .post("http://127.0.0.1:8000/api/course/store", newData)
+        .post("http://tmsapi.db/api/course/store", newData)
         .then((response) => {
           setCourses(response.data);
           resolve();
@@ -108,7 +108,7 @@ const Courses = () => {
 
     if (errorList.length < 1) {
       axios
-        .put(`http://127.0.0.1:8000/api/course/update/${oldData.id}`, newData)
+        .put(`http://tmsapi.db/api/course/update/${oldData.id}`, newData)
         .then((response) => {
           setCourses(response.data);
           setAlertMessage(["Course Updated Successfully  "]);
@@ -131,7 +131,7 @@ const Courses = () => {
 
   const handleRowDelete = (oldData, resolve) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/course/delete/${oldData.id}`)
+      .delete(`http://tmsapi.db/api/course/delete/${oldData.id}`)
       .then((response) => {
         setCourses(response.data);
         setAlertMessage(["Record Deleted Successfully  "]);
@@ -154,7 +154,7 @@ const Courses = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/courses")
+      .get("http://tmsapi.db/api/courses")
       .then((response) => {
         setCourses(response.data);
         setIsLoading(false);

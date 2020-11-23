@@ -55,7 +55,7 @@ const ThisMonthTrainings = () => {
     let mounted = true;
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/thismonthtraining")
+      .get("http://tmsapi.db/api/thismonthtraining")
       .then((response) => {
         if (mounted) {
           setSchedule(response.data);
@@ -77,7 +77,7 @@ const ThisMonthTrainings = () => {
 
   /* const fetchParticipants = (schedule_id) => {
     axios
-      .post("http://127.0.0.1:8000/api/trainees/participant", schedule_id)
+      .post("http://tmsapi.db/api/trainees/participant", schedule_id)
       .then((response) => {
         console.log(response.data);
         return response.data;

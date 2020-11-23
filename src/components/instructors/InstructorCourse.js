@@ -55,7 +55,7 @@ const InstructorCourse = ({ id }) => {
   useEffect(() => {
     let mounted = true;
     axios
-      .get(`http://127.0.0.1:8000/api/instructorcourses/${id}`)
+      .get(`http://tmsapi.db/api/instructorcourses/${id}`)
       .then((response) => {
         if (mounted) {
           setInstructorCourses(response.data);
@@ -107,8 +107,8 @@ const InstructorCourse = ({ id }) => {
     };
 
     axios
-      .put(
-        `http://127.0.0.1:8000/api/instructorcourse/update/${oldData.id}`,
+      .post(
+        `http://tmsapi.db/api/instructorcourse/update/${oldData.id}`,
         formData
       )
       .then((response) => {
@@ -141,7 +141,7 @@ const InstructorCourse = ({ id }) => {
     //  console.log(formData.course_title);
 
     axios
-      .post(`http://127.0.0.1:8000/api/instructorcourse/store`, formData)
+      .post(`http://tmsapi.db/api/instructorcourse/store`, formData)
       .then((response) => {
         setInstructorCourses(response.data);
         resolve();

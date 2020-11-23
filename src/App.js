@@ -18,6 +18,7 @@ import InternalTrainingReport from "./components/reports/InternalTrainingReport"
 import InternalTrainingCostReport from "./components/reports/InternalTrainingCostReport";
 import ExternalTrainingCostReport from "./components/reports/ExternalTrainingCostReport";
 import TrainingRequests from "./components/trainingRequests/TrainingRequests";
+import Departments from "./components/trainees/Departments";
 
 const App = (props) => {
   const [email, setEmail] = useState("");
@@ -43,7 +44,7 @@ const App = (props) => {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/user/login", formData)
+      .post("http://tmsapi.db/api/user/login", formData)
       .then((response) => {
         setIserror(false);
 
@@ -78,12 +79,18 @@ const App = (props) => {
       <>
         <Header />
         <NavBar />
+
         <ProtectedRoute
           exact
           path="/dashboard"
           component={Dashboard}
           email={email}
           password={password}
+        />
+        <ProtectedRoute
+          exact
+          path="/trainees/department"
+          component={Departments}
         />
         <ProtectedRoute
           exact

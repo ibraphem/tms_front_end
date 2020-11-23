@@ -63,7 +63,7 @@ const TrainingSchedule = () => {
     let mounted = true;
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/trainingschedule")
+      .get("http://tmsapi.db/api/trainingschedule")
       .then((response) => {
         if (mounted) {
           setSchedule(response.data);
@@ -89,7 +89,7 @@ const TrainingSchedule = () => {
 
   /*const fetchParticipants = (schedule_id) => {
     axios
-      .post("http://127.0.0.1:8000/api/trainees/participant", schedule_id)
+      .post("http://tmsapi.db/api/trainees/participant", schedule_id)
       .then((response) => {
         console.log(response.data);
         return response.data;
@@ -242,8 +242,8 @@ const TrainingSchedule = () => {
 
     if (errorList.length < 1) {
       axios
-        .put(
-          `http://127.0.0.1:8000/api/schedul/update/${oldData.schedule_id}`,
+        .post(
+          `http://tmsapi.db/api/schedul/update/${oldData.schedule_id}`,
           formData
         )
         .then((response) => {
@@ -269,7 +269,7 @@ const TrainingSchedule = () => {
     console.log(oldData.schedule_id);
     axios
       .delete(
-        `http://127.0.0.1:8000/api/schedule/delete/${oldData.schedule_id}`
+        `http://tmsapi.db/api/schedule/delete/${oldData.schedule_id}`
       )
       .then((response) => {
         setSchedule(response.data);

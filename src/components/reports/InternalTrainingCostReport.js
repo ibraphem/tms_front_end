@@ -74,7 +74,7 @@ const InternalTrainingCostReport = () => {
     //   console.log(year);
 
     axios
-      .get(`http://127.0.0.1:8000/api/internal/report/cost/${value}/${year}`)
+      .get(`http://tmsapi.db/api/internal/report/cost/${value}/${year}`)
       .then((response) => {
         console.log(response.data);
         setShowFilter(false);

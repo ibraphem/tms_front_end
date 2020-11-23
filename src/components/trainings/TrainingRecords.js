@@ -1,15 +1,14 @@
 import React, { forwardRef, useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { CircularProgress } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
-
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
-
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Clear from "@material-ui/icons/Clear";
-
+import SendIcon from "@material-ui/icons/Send";
 import Edit from "@material-ui/icons/Edit";
 import FilterList from "@material-ui/icons/FilterList";
 import FirstPage from "@material-ui/icons/FirstPage";
@@ -18,8 +17,11 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-
 import moment from "moment";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import TextField from "@material-ui/core/TextField";
 
 const TrainingRecords = () => {
   const formatDate = (date) => {
@@ -54,11 +56,34 @@ const TrainingRecords = () => {
 
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [sentDate, setSentDate] = useState("");
+  const [sentCert, setSentCert] = useState([]);
+
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid green",
+      borderRadius: "5px",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+    sendButton: {
+      marginTop: "5px",
+    },
+  }));
+
+  const classes = useStyles();
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/trainingrecords")
+      .get("http://tmsapi.db/api/trainingrecords")
       .then((response) => {
         setRecords(response.data);
         setIsLoading(false);
@@ -131,37 +156,44 @@ const TrainingRecords = () => {
     },
   ];
 
-  const handleRowUpdate = (newData, oldData, resolve) => {
-    let s_date = newData.sent_date;
-    let sent_date = new Date(newData.sent_date).toISOString().slice(0, 10);
+  const handleOpen = (data) => {
+    setSentCert(data);
+    setOpen(true);
+  };
 
+  // console.log(sentCert);
+
+  const handleClose = (data) => {
+    setOpen(false);
+  };
+
+  const handleSentDate = (e) => {
+    setSentDate(e.target.value);
+  };
+
+  const sendToRegistry = (e) => {
+    e.preventDefault();
+    const sent_cert_arr = [];
+    for (let i = 0; i < sentCert.length; i++) {
+      sent_cert_arr.push(sentCert[i].id);
+    }
+
+    //  console.log(sent_cert_arr);
     const formData = {
-      sent_date: sent_date,
+      sentCert: sent_cert_arr,
+      sentDate: sentDate,
     };
 
-    //  console.log(s_date);
-
-    if (s_date === null) {
-      alert("Please pick a date");
-      resolve();
-      // setRecords(records);
-    } else {
-      axios
-        .put(
-          `http://127.0.0.1:8000/api/sendcertificate/${oldData.id}`,
-          formData
-        )
-        .then((response) => {
-          setRecords(response.data);
-          resolve();
-        })
-        .catch((error) => {
-          console.log(error);
-
-          resolve();
-        });
-    }
+    axios
+      .post("http://tmsapi.db/api/sendcertificate", formData)
+      .then((response) => {
+        // console.log(response.data);
+        setOpen(false);
+        setRecords(response.data);
+      });
   };
+
+  //console.log(sentDate);
 
   return (
     <div className="content-wrapper">
@@ -203,6 +235,7 @@ const TrainingRecords = () => {
                   options={{
                     search: true,
                     sorting: true,
+                    selection: true,
                     exportButton: false,
                     headerStyle: {
                       backgroundColor: "#01579b",
@@ -212,16 +245,62 @@ const TrainingRecords = () => {
                   style={{
                     fontSize: "0.9rem",
                   }}
-                  editable={{
-                    onRowUpdate: (newData, oldData) =>
-                      new Promise((resolve) => {
-                        handleRowUpdate(newData, oldData, resolve);
-                      }),
-                  }}
+                  actions={[
+                    {
+                      tooltip: "Send certificate to registry",
+                      icon: () => <SendIcon />,
+                      onClick: (evt, data) => {
+                        handleOpen(data);
+                      },
+                    },
+                  ]}
                 />
               ) : (
                 <CircularProgress />
               )}
+              <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  timeout: 500,
+                }}
+              >
+                <Fade in={open}>
+                  <div className={classes.paper}>
+                    <h2 id="transition-modal-title">Select Sent Date</h2>
+                    {/*  <p id="transition-modal-description">
+                      react-transition-group animates me.
+              </p> */}
+                    <form onSubmit={sendToRegistry}>
+                      <TextField
+                        id="sent_date"
+                        variant="outlined"
+                        //   label="Training End Date"
+                        type="date"
+                        required={true}
+                        fullWidth
+                        onChange={handleSentDate}
+                      />
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        //  onClick={sendToRegistry}
+                        required={true}
+                        className={classes.sendButton}
+                      >
+                        Submit
+                      </Button>
+                    </form>
+                  </div>
+                </Fade>
+              </Modal>
 
               {/* /.card-body */}
 

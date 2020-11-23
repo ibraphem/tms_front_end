@@ -21,6 +21,7 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 import ErrorAlert from "../alerts/ErrorAlert";
 import SuccessAlert from "../alerts/SuccessAlert";
 import TraineeCert from "./TraineeCert";
+import Printer from "../layouts/Printer";
 
 const ActiveStaffs = () => {
   const tableIcons = {
@@ -66,10 +67,14 @@ const ActiveStaffs = () => {
       errorList.push("Please enter  surname   ");
       setIserror(true);
     }
+    if (newData.department_id === undefined) {
+      errorList.push("Please select a station, unit or department  ");
+      setIserror(true);
+    }
     if (errorList.length < 1) {
       //no error
       axios
-        .post("http://127.0.0.1:8000/api/trainee/store", newData)
+        .post("http://tmsapi.db/api/trainee/store", newData)
         .then((response) => {
           setTrainees(response.data);
           resolve();
@@ -105,10 +110,14 @@ const ActiveStaffs = () => {
       errorList.push("surname can't be empty  ");
       setIserror(true);
     }
+    if (newData.department_id === "") {
+      errorList.push("Please select a station, unit or department  ");
+      setIserror(true);
+    }
 
     if (errorList.length < 1) {
       axios
-        .put(`http://127.0.0.1:8000/api/trainee/update/${oldData.id}`, newData)
+        .post(`http://tmsapi.db/api/trainee/update/${oldData.id}`, newData)
         .then((response) => {
           // console.log(response.data);
           setTrainees(response.data);
@@ -130,9 +139,9 @@ const ActiveStaffs = () => {
     }
   };
 
-  const handleRowDelete = (oldData, resolve) => {
+  /* const handleRowDelete = (oldData, resolve) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/trainee/delete/${oldData.id}`)
+      .delete(`http://tmsapi.db/api/trainee/delete/${oldData.id}`)
       .then((response) => {
         // console.log(response.data);
         setTrainees(response.data);
@@ -146,11 +155,11 @@ const ActiveStaffs = () => {
         setIserror(true);
         resolve();
       });
-  };
+  }; */
 
   const handleExit = (rowData) => {
     axios
-      .put(`http://127.0.0.1:8000/api/trainee/exit/${rowData.id}`)
+      .get(`http://tmsapi.db/api/trainee/exit/${rowData.id}`)
       .then((response) => {
         console.log(response.data);
         setTrainees(response.data);
@@ -166,13 +175,14 @@ const ActiveStaffs = () => {
 
   const [trainees, setTrainees] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [departments, setDepartments] = useState([]);
   const [iserror, setIserror] = useState(null);
   const [alertMessage, setAlertMessage] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/trainee")
+      .get("http://tmsapi.db/api/trainee")
       .then((response) => {
         setTrainees(response.data);
         setIsLoading(false);
@@ -180,7 +190,23 @@ const ActiveStaffs = () => {
       .catch((err) => {
         console.log(err);
       });
+
+    axios
+      .get("http://tmsapi.db/api/department")
+      .then((response) => {
+        setDepartments(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
+  const units = {};
+  departments.map((department) => {
+    const { id, station } = department;
+    units[id] = station;
+  });
 
   const columns = [
     {
@@ -195,7 +221,14 @@ const ActiveStaffs = () => {
       title: "SURNAME",
       field: "surname",
     },
+    {
+      title: "DEPT/UNIT/STATION",
+      field: "department_id",
+      lookup: units,
+    },
   ];
+
+  console.log(units);
 
   return (
     <div className="content-wrapper">
@@ -245,7 +278,6 @@ const ActiveStaffs = () => {
                   options={{
                     search: true,
                     sorting: true,
-                    exportButton: true,
                     headerStyle: {
                       backgroundColor: "#01579b",
                       color: "#FFF",
@@ -255,7 +287,13 @@ const ActiveStaffs = () => {
                     {
                       tooltip: "Show Name",
                       render: (rowData) => {
-                        return <TraineeCert id={rowData.id} />;
+                        return (
+                          <Printer
+                            id={rowData.id}
+                            first_name={rowData.first_name}
+                            surname={rowData.surname}
+                          />
+                        );
                       },
                     },
                   ]}
@@ -268,10 +306,10 @@ const ActiveStaffs = () => {
                       new Promise((resolve) => {
                         handleRowAdd(newData, resolve);
                       }),
-                    onRowDelete: (oldData) =>
+                    /*        onRowDelete: (oldData) =>
                       new Promise((resolve) => {
                         handleRowDelete(oldData, resolve);
-                      }),
+                      }), */
                   }}
                   actions={[
                     {

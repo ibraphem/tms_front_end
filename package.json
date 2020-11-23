@@ -18,9 +18,10 @@
     "react": "^16.13.1",
     "react-data-table-component": "^6.11.0",
     "react-dom": "^16.13.1",
+    "react-easy-print": "^0.6.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
-    "react-to-print": "^2.10.0",
+    "react-to-print": "^2.11.0",
     "styled-components": "^5.1.1"
   },
   "scripts": {

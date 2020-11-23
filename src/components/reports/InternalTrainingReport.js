@@ -67,7 +67,7 @@ const InternalTrainingReport = () => {
     e.preventDefault();
 
     axios
-      .get(`http://127.0.0.1:8000/api/internal/report/${year}/${month}`)
+      .get(`http://tmsapi.db/api/internal/report/${year}/${month}`)
       .then((response) => {
         console.log(response.data);
         setShowFilter(false);
@@ -76,7 +76,7 @@ const InternalTrainingReport = () => {
       });
 
     axios
-      .get(`http://127.0.0.1:8000/api/absent/trainees/${year}/${month}`)
+      .get(`http://tmsapi.db/api/absent/trainees/${year}/${month}`)
       .then((response) => {
         //   console.log(response.data);
 
@@ -253,42 +253,50 @@ const InternalTrainingReport = () => {
                                 </tbody>
                               </table>
                               <br />
-                              <div className="card-header">
-                                <h6 className={classes.tableTitle}>
-                                  <b>
-                                    NAMES OF ABSENTEES FOR {monthName} {year}{" "}
-                                    SCHEDULED TRAININGS
-                                  </b>
-                                </h6>
-                              </div>
-                              <table
-                                id="example2"
-                                className="table table-bordered table-hover"
-                              >
-                                <thead>
-                                  <tr>
-                                    <th width="5px">S/N</th>
-                                    <th>NAME</th>
-                                    <th>TRAINING TITLES</th>
-                                    <th>REASONS FOR ABSENCE </th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {absentTrainees.map((absentTrainee) => (
-                                    <tr
-                                      key={absentTrainee.id}
-                                      className={classes.tableRow}
-                                    >
-                                      <td>{k++}</td>
-                                      <td>{`${absentTrainee.first_name} ${absentTrainee.surname}`}</td>
-                                      <td>{absentTrainee.training_title}</td>
-                                      <td>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
+                              {absentTrainees.length > 0 ? (
+                                <>
+                                  <div className="card-header">
+                                    <h6 className={classes.tableTitle}>
+                                      <b>
+                                        NAMES OF ABSENTEES FOR {monthName}{" "}
+                                        {year} SCHEDULED TRAININGS
+                                      </b>
+                                    </h6>
+                                  </div>
+                                  <table
+                                    id="example2"
+                                    className="table table-bordered table-hover"
+                                  >
+                                    <thead>
+                                      <tr>
+                                        <th width="5px">S/N</th>
+                                        <th>NAME</th>
+                                        <th>TRAINING TITLES</th>
+                                        <th>REASONS FOR ABSENCE </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {absentTrainees.map((absentTrainee) => (
+                                        <tr
+                                          key={absentTrainee.id}
+                                          className={classes.tableRow}
+                                        >
+                                          <td>{k++}</td>
+                                          <td>{`${absentTrainee.first_name} ${absentTrainee.surname}`}</td>
+                                          <td>
+                                            {absentTrainee.training_title}
+                                          </td>
+                                          <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </>
+                              ) : (
+                                ""
+                              )}
 
                               <br />
                               {internalTrainingReports.map(

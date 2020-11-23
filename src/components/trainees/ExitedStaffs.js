@@ -21,6 +21,9 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 import ErrorAlert from "../alerts/ErrorAlert";
 import SuccessAlert from "../alerts/SuccessAlert";
 import TraineeCert from "./TraineeCert";
+import TestTrainees from "./TestTrainees";
+import Cert from "./Cert";
+import Printer from "../layouts/Printer";
 
 const ExitedStaffs = () => {
   const tableIcons = {
@@ -57,7 +60,7 @@ const ExitedStaffs = () => {
 
   const handleActive = (rowData) => {
     axios
-      .put(`http://127.0.0.1:8000/api/trainee/active/${rowData.id}`)
+      .get(`http://tmsapi.db/api/trainee/active/${rowData.id}`)
       .then((response) => {
         console.log(response.data);
         setTrainees(response.data);
@@ -74,7 +77,7 @@ const ExitedStaffs = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/exitedtrainee")
+      .get("http://tmsapi.db/api/exitedtrainee")
       .then((response) => {
         setTrainees(response.data);
         setIsLoading(false);
@@ -96,6 +99,10 @@ const ExitedStaffs = () => {
     {
       title: "SURNAME",
       field: "surname",
+    },
+    {
+      title: "DEPT/UNIT/STATION",
+      field: "station",
     },
   ];
 
@@ -147,7 +154,6 @@ const ExitedStaffs = () => {
                   options={{
                     search: true,
                     sorting: true,
-                    exportButton: true,
                     headerStyle: {
                       backgroundColor: "#01579b",
                       color: "#FFF",
@@ -157,7 +163,17 @@ const ExitedStaffs = () => {
                     {
                       tooltip: "Show Name",
                       render: (rowData) => {
-                        return <TraineeCert id={rowData.id} />;
+                        return (
+                          <Printer
+                            id={rowData.id}
+                            first_name={rowData.first_name}
+                            surname={rowData.surname}
+                          />
+                        );
+
+                        {
+                          /*<Cert id={rowData.id} />;*/
+                        }
                       },
                     },
                   ]}

@@ -55,7 +55,7 @@ const TraineeCert = ({ id }) => {
   useEffect(() => {
     let mounted = true;
     axios
-      .get(`http://127.0.0.1:8000/api/showtrainings/${id}`)
+      .get(`http://tmsapi.db/api/showtrainings/${id}`)
       .then((response) => {
         if (mounted) {
           setTrainingCert(response.data);
@@ -68,6 +68,8 @@ const TraineeCert = ({ id }) => {
       mounted = false;
     };
   }, [id]);
+
+  console.log(trainingCert);
 
   const columns = [
     {
@@ -123,6 +125,7 @@ const TraineeCert = ({ id }) => {
     <>
       <MaterialTable
         columns={columns}
+        title="Training records"
         data={trainingCert}
         icons={tableIcons}
         options={{

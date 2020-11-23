@@ -57,7 +57,7 @@ const TrainingRequests = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/trainingrequest")
+      .get("http://tmsapi.db/api/trainingrequest")
       .then((response) => {
         setRequest(response.data);
         setIsLoading(false);
@@ -78,7 +78,7 @@ const TrainingRequests = () => {
       training_title: newData.training_title,
     };
     axios
-      .post("http://127.0.0.1:8000/api/request/store", formData)
+      .post("http://tmsapi.db/api/request/store", formData)
       .then((response) => {
         setRequest(response.data);
         resolve();
@@ -104,7 +104,7 @@ const TrainingRequests = () => {
       training_title: newData.training_title,
     };
     axios
-      .put(`http://127.0.0.1:8000/api/request/update/${oldData.id}`, formData)
+      .post(`http://tmsapi.db/api/request/update/${oldData.id}`, formData)
       .then((response) => {
         // console.log(response.data);
         setRequest(response.data);

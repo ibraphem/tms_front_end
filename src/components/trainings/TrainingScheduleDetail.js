@@ -50,7 +50,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
   const toTrainees = () => {
     let mounted = true;
     axios
-      .get(`http://127.0.0.1:8000/api/addparticipant/${schedule_id}`)
+      .get(`http://tmsapi.db/api/addparticipant/${schedule_id}`)
       .then((response) => {
         if (mounted) {
           setTrainees(response.data);
@@ -65,9 +65,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
     let mounted = true;
 
     axios
-      .get(
-        `http://127.0.0.1:8000/api/trainingschedule/participants/${schedule_id}`
-      )
+      .get(`http://tmsapi.db/api/trainingschedule/participants/${schedule_id}`)
       .then((response) => {
         if (mounted) {
           setParticipants(response.data);
@@ -80,7 +78,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
     // toTrainees();
 
     axios
-      .get(`http://127.0.0.1:8000/api/addparticipant/${schedule_id}`)
+      .get(`http://tmsapi.db/api/addparticipant/${schedule_id}`)
       .then((response) => {
         if (mounted) {
           setTrainees(response.data);
@@ -115,7 +113,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
       alert("You must select at least one trainee to add");
     } else {
       axios
-        .post(`http://127.0.0.1:8000/api/scheduleparticipant/add`, formData)
+        .post(`http://tmsapi.db/api/scheduleparticipant/add`, formData)
         .then((response) => {
           setParticipants(response.data);
           setSelectTrainees([]);
@@ -136,7 +134,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
     let id = event.target.value;
 
     axios
-      .put(`http://127.0.0.1:8000/api/schedule/${id}/${schedule_id}`)
+      .post(`http://tmsapi.db/api/schedule/${id}/${schedule_id}`)
       .then((response) => {
         setParticipants(response.data);
       })
@@ -149,12 +147,7 @@ const TrainingScheduleDetail = ({ schedule_id }) => {
     let id = e.currentTarget.value;
 
     axios
-      .delete(`http://127.0.0.1:8000/api/participant/${id}/${schedule_id}`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-      })
+      .post(`http://tmsapi.db/api/participant/${id}/${schedule_id}`)
 
       .then((response) => {
         setParticipants(response.data);

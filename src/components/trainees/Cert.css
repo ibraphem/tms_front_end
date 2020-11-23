@@ -1,0 +1,11 @@
+.tablehead {
+  background-color: #000;
+}
+
+.tablecell {
+  color: #fff !important;
+}
+
+.table {
+  margin: 5px;
+}

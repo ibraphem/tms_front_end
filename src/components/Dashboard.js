@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/count")
+      .get("http://tmsapi.db/api/count")
       .then((response) => {
         console.log(response.data);
         setCount(response.data);

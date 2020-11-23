@@ -56,7 +56,7 @@ const NextMonthExpiry = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/expiry")
+      .get("http://tmsapi.db/api/expiry")
       .then((response) => {
         setExpiredTraining(response.data.next_month_expiry);
         setMonth(response.data.nextMonth);

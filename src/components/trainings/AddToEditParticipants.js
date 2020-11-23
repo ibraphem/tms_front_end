@@ -34,7 +34,7 @@ const AddToEditParticipants = ({
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/trainee")
+      .get("http://tmsapi.db/api/trainee")
       .then((response) => {
         setIsLoading(true);
         setTrainees(response.data);
